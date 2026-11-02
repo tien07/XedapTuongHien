@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Xe đạp Tường Hiền – Xe đạp thể thao</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--ink:#0f172a;--mut:#64748b;--br:#ff5a1f;--bg:#f4f5f7;--ln:#e5e7eb}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Be Vietnam Pro',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1200px;margin:0 auto;padding:0 16px}
+.top{background:#0b1220;color:#fff;position:sticky;top:0;z-index:20}
+.bar{display:flex;justify-content:space-between;align-items:center;height:60px}
+.logo{display:flex;gap:10px;align-items:center;font-weight:700;font-size:18px}.logo b{color:var(--br)}
+.btn{border:0;background:var(--br);color:#fff;padding:10px 16px;border-radius:10px;font-family:inherit;font-weight:600;font-size:14px;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}.btn.sm{padding:7px 12px;font-size:13px}
+.btn.ghost{background:transparent;border:1px solid #ffffff55;color:#fff}
+.btn.gray{background:#e2e8f0;color:var(--ink)}.btn.red{background:#dc2626}
+.hero{background:linear-gradient(120deg,#0b1220,#1e293b 60%,#7c2d12);color:#fff;padding:44px 0}
+.hero h1{margin:0 0 8px;font-size:clamp(26px,5vw,44px);font-weight:800;line-height:1.15}.hero h1 span{color:var(--br)}
+.hero p{margin:0 0 20px;color:#cbd5e1;max-width:560px}
+.hero input{max-width:480px;border:0;padding:13px 16px;border-radius:12px}
+.lay{display:grid;grid-template-columns:260px 1fr;gap:24px;padding:24px 16px}
+#flt{background:#fff;border:1px solid var(--ln);border-radius:14px;padding:16px;align-self:start;position:sticky;top:76px}
+#flt h4{margin:0 0 10px}#flt label{display:block;font-size:13px;font-weight:600;margin:12px 0 4px}
+#ftog{display:none;width:100%;margin-bottom:12px}
+input,select,textarea{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:10px;font:inherit;font-size:14px;background:#fff;color:var(--ink)}
+.chk{display:flex!important;align-items:center;gap:8px}.chk input{width:auto}
+.tools{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.tools select{width:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--ln);display:flex;flex-direction:column;transition:.2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 24px #0f172a1f}
+.im{aspect-ratio:4/3;background:#fff;display:flex;align-items:center;justify-content:center;position:relative;border-bottom:1px solid var(--ln)}
+.im img{width:100%;height:100%;object-fit:contain}.im svg{width:40%;color:#cbd5e1}
+.tag{position:absolute;top:8px;left:8px;background:#0f172a;color:#fff;font-style:normal;font-size:12px;padding:3px 9px;border-radius:99px}
+.cb{padding:12px;display:flex;flex-direction:column;gap:2px;flex:1}
+.cb small{color:var(--mut)}.cb h3{margin:0;font-size:15px;line-height:1.35}
+.pr{color:var(--br);font-weight:800;font-size:18px;margin-top:4px}
+.ok{color:#15803d!important}.out{color:#b91c1c!important}
+.ad{display:flex;gap:6px;margin-top:8px}.ad button{flex:1;padding:6px;border:1px solid #cbd5e1;background:#fff;border-radius:8px;cursor:pointer;font-family:inherit}
+.ad .dl{color:#b91c1c;border-color:#fecaca}
+.empty{grid-column:1/-1;text-align:center;color:var(--mut);padding:60px 10px;background:#fff;border:1px dashed #cbd5e1;border-radius:14px}
+.det{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;padding:24px 16px}
+.main{background:#fff;border:1px solid var(--ln);border-radius:14px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.main img{width:100%;height:100%;object-fit:contain}.main svg{width:35%;color:#cbd5e1}
+.ths{display:flex;gap:8px;margin-top:10px;overflow-x:auto}
+.ths img{width:72px;height:72px;object-fit:cover;border-radius:10px;border:2px solid transparent;cursor:pointer;background:#fff}.ths img.on{border-color:var(--br)}
+.det h1{margin:0 0 6px;font-size:28px;line-height:1.25}.det .pr{font-size:30px;margin:6px 0 12px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--ln)}
+td{padding:9px 12px;border-bottom:1px solid var(--ln);font-size:14px}td:first-child{color:var(--mut);width:42%}
+.desc{white-space:pre-wrap;background:#fff;border:1px solid var(--ln);border-radius:12px;padding:14px;margin-top:14px}
+.back{display:inline-block;margin:16px 0 0;color:var(--mut);font-weight:600}
+footer{background:#0b1220;color:#94a3b8;padding:22px 0;text-align:center;font-size:14px;margin-top:20px}footer a{color:#fff}
+#modal{display:none;position:fixed;inset:0;background:#0f172a99;z-index:50;justify-content:center;align-items:flex-start;overflow:auto;padding:20px 12px}
+#modal.on{display:flex}.mb{background:#fff;border-radius:16px;padding:20px;width:100%;max-width:560px}
+.mb h3{margin:0 0 12px}.mb label{display:block;font-size:13px;font-weight:600;margin:10px 0 4px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.acts{display:flex;gap:8px;margin-top:16px;justify-content:flex-end;flex-wrap:wrap}
+.menu{display:grid;gap:8px}.menu .btn{text-align:left}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.th{position:relative;width:78px;height:78px}
+.th img{width:100%;height:100%;object-fit:cover;border-radius:10px;border:1px solid var(--ln);cursor:pointer}
+.th button{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;border:0;background:#dc2626;color:#fff;cursor:pointer}
+.th em{position:absolute;bottom:3px;left:3px;font-size:10px;background:var(--br);color:#fff;padding:0 5px;border-radius:5px;font-style:normal}
+.log{max-height:60vh;overflow:auto;font-size:13px}.log div{padding:7px 0;border-bottom:1px solid var(--ln)}.log small{color:var(--mut);display:block}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:10px 18px;border-radius:99px;font-size:14px;opacity:0;pointer-events:none;transition:.3s;z-index:60}
+#toast.on{opacity:1}
+@media(max-width:860px){.lay,.det{grid-template-columns:1fr}#flt{display:none;position:static}#flt.open{display:block}#ftog{display:block}}
+@media(max-width:520px){.grid{grid-template-columns:repeat(2,1fr);gap:10px}.cb h3{font-size:13px}.pr{font-size:15px}.hero{padding:30px 0}.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="app"></div><div id="modal"></div><div id="toast"></div>
+<script id="seed" type="application/json">{"updated":0,"products":[],"log":[],"shop":{"phone":"","address":""}}</script>
+<script>
+const $=(s,r=document)=>r.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const AU={u:'Tienthao',h:'b0d965d2c8eeef89d9698f02a79dcf7cabe8d9221732057cfa5986d0bc225dc4'};
+const AGES=['Trẻ em (3–7 tuổi)','Thiếu niên (8–13 tuổi)','Người lớn (14 tuổi trở lên)'];
+const FR=['XS (người cao 1m40–1m55)','S (người cao 1m55–1m65)','M (người cao 1m65–1m75)','L (người cao 1m75–1m85)','XL (người cao trên 1m85)','Một cỡ'];
+const PR=[['Dưới 3 triệu',0,3e6],['3 – 6 triệu',3e6,6e6],['6 – 10 triệu',6e6,1e7],['10 – 20 triệu',1e7,2e7],['Trên 20 triệu',2e7,1e13]];
+const WH=['12','14','16','18','20','24','26','27.5','29','700c'];
+const NOIMG='<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="42" r="10"/><circle cx="50" cy="42" r="10"/><path d="M14 42l10-20h18l8 20M24 22l10 20 8-20M22 16h8M40 22l-2-6h6"/></svg>';
+const vnd=n=>(+n||0).toLocaleString('vi-VN')+' ₫';
+let S={updated:0,products:[],log:[],shop:{phone:'',address:''}};
+let admin=sessionStorage.getItem('adm')==='1';
+let F={q:'',cat:'',age:'',price:'',wheel:'',frame:'',stock:false,sort:'new'};
+let cur=[],gi=0;
+/* >>> DÁN LINK GOOGLE APPS SCRIPT (kết thúc bằng /exec) VÀO GIỮA HAI DẤU NHÁY BÊN DƯỚI <<< */
+const API_URL='https://script.google.com/macros/s/AKfycbz6mrWfz2XAjeWVIFSrM1o4mpyeg3imwc3FjjjKwqqVZ65wcFaJuAU1mDZejEWdI1kl9g/exec';
+let CRED=null;try{CRED=JSON.parse(sessionStorage.getItem('cr')||'null')}catch(e){}
+if(API_URL&&!CRED)admin=false;
+async function api(body){
+  const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({...body,u:CRED&&CRED.u,p:CRED&&CRED.p})});
+  const j=await r.json();if(!j.ok)throw new Error(j.error||'Lỗi không xác định');return j;
+}
+async function pull(){
+  if(!API_URL)return;
+  try{const r=await fetch(API_URL+(API_URL.includes('?')?'&':'?')+'action=get&_='+Date.now());const j=await r.json();
+    if(j.ok&&j.state&&j.state.updated!==S.updated){S.products=(j.state.products||[]).map(p=>({...p,imgs:p.imgs||[]}));S.shop=j.state.shop||S.shop;S.updated=j.state.updated||0;await dbSet(S);if($('#modal').className!=='on')render(1)}
+  }catch(e){}
+}
+
+/* ---------- Lưu trữ (IndexedDB trong trình duyệt) ---------- */
+const idb=()=>new Promise((res,rej)=>{const r=indexedDB.open('tuonghien',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
+async function dbGet(){try{const d=await idb();return await new Promise(r=>{const q=d.transaction('kv').objectStore('kv').get('state');q.onsuccess=()=>r(q.result);q.onerror=()=>r(null)})}catch(e){return null}}
+async function dbSet(v){try{const d=await idb();await new Promise((res,rej)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,'state');t.oncomplete=res;t.onerror=()=>rej(t.error)})}catch(e){toast('Không lưu được: '+e.message)}}
+async function save(msg){
+  S.updated=Date.now();
+  if(API_URL){
+    toast('Đang lưu lên Google Drive...');
+    try{const r=await api({action:'save',msg,state:{updated:S.updated,products:S.products,shop:S.shop}});
+      S.products=r.state.products;S.shop=r.state.shop;S.updated=r.state.updated}
+    catch(e){toast('Lỗi lưu lên Drive: '+(e.message==='Failed to fetch'?'không kết nối được mạng/Google':e.message));S.updated=0;await pull();render(1);return}
+  }else{S.log.unshift({t:S.updated,m:msg});S.log=S.log.slice(0,300)}
+  await dbSet(S);render(1);toast(API_URL?'Đã lưu lên Google Drive ✔':'Đã lưu thay đổi');
+}
+function toast(m){const t=$('#toast');t.textContent=m;t.className='on';clearTimeout(toast.h);toast.h=setTimeout(()=>t.className='',2400)}
+
+/* ---------- Giao diện chung ---------- */
+const LOGO='<svg width="34" height="34" viewBox="0 0 64 64" fill="none" stroke="#ff5a1f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="42" r="10"/><circle cx="50" cy="42" r="10"/><path d="M14 42l10-20h18l8 20M24 22l10 20 8-20"/></svg>';
+const head=()=>`<header class="top"><div class="wrap bar"><a class="logo" href="#/">${LOGO}<span>Xe đạp <b>Tường Hiền</b></span></a><div>${admin?'<button class="btn sm" onclick="adminM()">⚙ Quản trị</button>':'<button class="btn sm ghost" onclick="loginM()">Đăng nhập</button>'}</div></div></header>`;
+const foot=()=>`<footer><div class="wrap">© ${new Date().getFullYear()} Xe đạp Tường Hiền${S.shop.phone?` · ☎ <a href="tel:${esc(S.shop.phone)}">${esc(S.shop.phone)}</a>`:''}${S.shop.address?` · ${esc(S.shop.address)}`:''}</div></footer>`;
+const opts=(l,v,all)=>(all?`<option value="">${all}</option>`:'')+l.map(x=>`<option${x===v?' selected':''}>${esc(x)}</option>`).join('');
+function openM(h){$('#modal').innerHTML=`<div class="mb">${h}</div>`;$('#modal').className='on'}
+function closeM(){$('#modal').className='';$('#modal').innerHTML=''}
+$('#modal').addEventListener('mousedown',e=>{if(e.target.id==='modal')closeM()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM()});
+
+/* ---------- Trang danh sách ---------- */
+function listPage(){
+  const cats=[...new Set(S.products.map(p=>p.cat).filter(Boolean))].sort();
+  const whs=[...new Set(S.products.map(p=>p.wheel).filter(Boolean))].sort((a,b)=>parseFloat(a)-parseFloat(b));
+  return `<section class="hero"><div class="wrap"><h1>Xe đạp <span>thể thao</span><br>chất lượng – giá tốt</h1><p>Chọn chiếc xe phù hợp với độ tuổi, chiều cao và ngân sách của bạn.</p><input placeholder="🔍 Tìm xe theo tên, danh mục..." value="${esc(F.q)}" oninput="setF('q',this.value)"></div></section>
+  <main class="wrap lay"><div><button id="ftog" class="btn gray" onclick="$('#flt').classList.toggle('open')">☰ Bộ lọc</button>
+  <aside id="flt"><h4>Bộ lọc</h4>
+  <label>Danh mục</label><select onchange="setF('cat',this.value)">${opts(cats,F.cat,'Tất cả')}</select>
+  <label>Độ tuổi</label><select onchange="setF('age',this.value)">${opts(AGES,F.age,'Tất cả')}</select>
+  <label>Giá bán</label><select onchange="setF('price',this.value)"><option value="">Tất cả</option>${PR.map((r,i)=>`<option value="${i}"${F.price===String(i)?' selected':''}>${r[0]}</option>`).join('')}</select>
+  <label>Kích thước bánh xe (inch)</label><select onchange="setF('wheel',this.value)">${opts(whs,F.wheel,'Tất cả')}</select>
+  <label>Chiều cao xe (cỡ khung)</label><select onchange="setF('frame',this.value)">${opts(FR,F.frame,'Tất cả')}</select>
+  <label class="chk"><input type="checkbox" ${F.stock?'checked':''} onchange="setF('stock',this.checked)"> Chỉ xe còn hàng</label>
+  <button class="btn gray sm" style="margin-top:14px;width:100%" onclick="resetF()">Xóa bộ lọc</button></aside></div>
+  <section><div class="tools"><b id="cnt"></b><div style="display:flex;gap:8px;align-items:center">${admin?'<button class="btn sm" onclick="pform()">＋ Thêm sản phẩm</button>':''}<select onchange="setF('sort',this.value)"><option value="new">Mới nhất</option><option value="asc"${F.sort==='asc'?' selected':''}>Giá tăng dần</option><option value="desc"${F.sort==='desc'?' selected':''}>Giá giảm dần</option></select></div></div><div id="grid" class="grid"></div></section></main>`;
+}
+function setF(k,v){F[k]=v;drawGrid()}
+function resetF(){F={q:'',cat:'',age:'',price:'',wheel:'',frame:'',stock:false,sort:F.sort};render(1)}
+const card=p=>`<a class="card" href="#/p/${p.id}"><div class="im">${p.imgs[0]?`<img loading="lazy" src="${p.imgs[0]}" alt="${esc(p.name)}">`:NOIMG}${p.stock<1?'<i class="tag">Hết hàng</i>':''}</div><div class="cb"><small>${esc(p.cat)}</small><h3>${esc(p.name)}</h3><div class="pr">${vnd(p.price)}</div><small class="${p.stock<1?'out':'ok'}">${p.stock<1?'Hết hàng':'Còn '+p.stock+' xe'}</small>${admin?`<div class="ad" onclick="event.preventDefault()"><button onclick="pform('${p.id}')">Sửa</button><button class="dl" onclick="delP('${p.id}')">Xóa</button></div>`:''}</div></a>`;
+function drawGrid(){
+  const q=F.q.toLowerCase(),r=F.price!==''?PR[+F.price]:null;
+  let a=S.products.filter(p=>(!q||(p.name+' '+p.cat+' '+p.desc).toLowerCase().includes(q))&&(!F.cat||p.cat===F.cat)&&(!F.age||p.age===F.age)&&(!F.wheel||p.wheel===F.wheel)&&(!F.frame||p.frame===F.frame)&&(!r||(p.price>=r[1]&&p.price<r[2]))&&(!F.stock||p.stock>0));
+  if(F.sort==='asc')a.sort((x,y)=>x.price-y.price);else if(F.sort==='desc')a.sort((x,y)=>y.price-x.price);else a.sort((x,y)=>(y.created||0)-(x.created||0));
+  $('#cnt').textContent=a.length+' sản phẩm';
+  $('#grid').innerHTML=a.length?a.map(card).join(''):`<div class="empty">${S.products.length?'Không có sản phẩm phù hợp với bộ lọc.':'Cửa hàng đang cập nhật sản phẩm. Quý khách vui lòng quay lại sau!'+(admin?'<br><br><button class="btn" onclick="pform()">＋ Thêm sản phẩm đầu tiên</button>':'')}</div>`;
+}
+
+/* ---------- Trang chi tiết ---------- */
+function detail(id){
+  const p=S.products.find(x=>x.id===id);
+  if(!p)return `<div class="wrap"><div class="empty" style="margin:30px 0">Không tìm thấy sản phẩm. <br><a class="back" href="#/">← Về trang chủ</a></div></div>`;
+  gi=0;
+  const row=(a,b)=>b?`<tr><td>${a}</td><td>${esc(b)}</td></tr>`:'';
+  return `<div class="wrap"><a class="back" href="#/">← Tất cả sản phẩm</a></div><div class="wrap det"><div><div class="main" id="mainimg">${p.imgs[0]?`<img src="${p.imgs[0]}" alt="${esc(p.name)}">`:NOIMG}</div>${p.imgs.length>1?`<div class="ths">${p.imgs.map((s,i)=>`<img src="${s}" class="${i?'':'on'}" onclick="setImg('${p.id}',${i})">`).join('')}</div>`:''}</div>
+  <div><small style="color:var(--mut)">${esc(p.cat)}</small><h1>${esc(p.name)}</h1><div class="pr">${vnd(p.price)}</div>
+  <table>${row('Tình trạng',p.stock<1?'Hết hàng':'Còn '+p.stock+' xe')}${row('Danh mục',p.cat)}${row('Độ tuổi',p.age)}${row('Kích thước bánh xe',p.wheel?p.wheel+(/c$/i.test(p.wheel)?'':' inch'):'')}${row('Chiều cao xe (cỡ khung)',p.frame)}</table>
+  <div class="desc">${p.desc?esc(p.desc):'Chưa có mô tả.'}</div>
+  ${S.shop.phone?`<a class="btn" style="display:block;text-align:center;margin-top:14px;padding:13px" href="tel:${esc(S.shop.phone)}">☎ Gọi đặt mua: ${esc(S.shop.phone)}</a>`:''}
+  ${admin?`<div class="acts" style="justify-content:flex-start"><button class="btn gray" onclick="pform('${p.id}')">Sửa</button><button class="btn red" onclick="delP('${p.id}')">Xóa</button></div>`:''}</div></div>`;
+}
+function setImg(id,i){const p=S.products.find(x=>x.id===id);$('#mainimg').innerHTML=`<img src="${p.imgs[i]}">`;document.querySelectorAll('.ths img').forEach((e,k)=>e.classList.toggle('on',k===i))}
+
+/* ---------- Điều hướng ---------- */
+function render(keep){
+  const m=location.hash.match(/^#\/p\/(.+)$/);
+  $('#app').innerHTML=head()+(m?detail(m[1]):listPage())+foot();
+  if(!m)drawGrid();
+  if(!keep)window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',()=>render());
+
+/* ---------- Đăng nhập ---------- */
+function loginM(){openM(`<h3>Đăng nhập chủ cửa hàng</h3><form onsubmit="doLogin(event)"><label>Tài khoản</label><input name="lu" autocomplete="username" required><label>Mật khẩu</label><input name="lp" type="password" autocomplete="current-password" required><div id="lerr" style="color:#dc2626;font-size:13px;margin-top:8px"></div><div class="acts"><button type="button" class="btn gray" onclick="closeM()">Hủy</button><button class="btn">Đăng nhập</button></div></form>`);setTimeout(()=>$('input[name=lu]').focus(),50)}
+async function doLogin(e){
+  e.preventDefault();const f=e.target;let h='';
+  if(API_URL){CRED={u:f.lu.value.trim(),p:f.lp.value};
+    try{await api({action:'login'});sessionStorage.setItem('cr',JSON.stringify(CRED));admin=true;sessionStorage.setItem('adm','1');closeM();render(1);toast('Đăng nhập thành công')}
+    catch(x){CRED=null;$('#lerr').textContent=x.message==='Failed to fetch'?'Không kết nối được Google Drive. Kiểm tra link API_URL và mạng.':x.message}
+    return}
+  try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(f.lu.value.trim()+':'+f.lp.value));h=[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(_){}
+  if(h===AU.h){admin=true;sessionStorage.setItem('adm','1');closeM();render(1);toast('Đăng nhập thành công')}else $('#lerr').textContent='Sai tài khoản hoặc mật khẩu.';
+}
+function logout(){admin=false;CRED=null;sessionStorage.removeItem('adm');sessionStorage.removeItem('cr');closeM();render(1)}
+
+/* ---------- Quản trị ---------- */
+function adminM(){openM(`<h3>Quản trị cửa hàng</h3><p style="margin:0 0 10px;font-size:13px;color:${API_URL?'#15803d':'#b45309'}">${API_URL?'✔ Đang tự động lưu lên Google Drive':'⚠ Chưa kết nối Google Drive – dữ liệu chỉ lưu trong trình duyệt này'}</p><div class="menu"><button class="btn" onclick="pform()">＋ Thêm sản phẩm</button><button class="btn gray" onclick="shopM()">☎ Số điện thoại & địa chỉ cửa hàng</button><button class="btn gray" onclick="logM()">🕘 Lịch sử thay đổi</button><button class="btn gray" onclick="backup()">⬇ Sao lưu dữ liệu (tải file .json để cất vào Google Drive)</button><button class="btn gray" onclick="$('#rest').click()">⬆ Khôi phục từ file sao lưu</button><button class="btn gray" onclick="exportSite()">🌐 Xuất trang web đã cập nhật (index.html để đăng lên mạng)</button><button class="btn red" onclick="logout()">Đăng xuất</button></div><input id="rest" type="file" accept=".json,application/json" hidden onchange="restore(this.files[0])"><div class="acts"><button class="btn gray" onclick="closeM()">Đóng</button></div>`)}
+function dl(name,txt,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}
+const stamp=()=>new Date().toISOString().slice(0,10);
+function backup(){dl(`xe-dap-tuong-hien-sao-luu-${stamp()}.json`,JSON.stringify(S),'application/json')}
+function restore(f){if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!Array.isArray(d.products))throw 0;S.products=d.products;S.shop=d.shop||S.shop;closeM();save('Khôi phục dữ liệu từ file sao lưu ('+d.products.length+' sản phẩm)')}catch(e){toast('File sao lưu không hợp lệ')}};r.readAsText(f)}
+function exportSite(){
+  const c=document.documentElement.cloneNode(true);
+  c.querySelector('#seed').textContent=JSON.stringify(S).replace(/</g,'\\u003c');
+  c.querySelector('#app').innerHTML='';c.querySelector('#modal').innerHTML='';c.querySelector('#modal').className='';c.querySelector('#toast').className='';c.querySelector('#toast').textContent='';
+  dl('index.html','<!DOCTYPE html>\n'+c.outerHTML,'text/html');toast('Đã xuất index.html kèm dữ liệu mới nhất');
+}
+async function logM(){let L=S.log;if(API_URL){try{L=(await api({action:'log'})).log}catch(e){toast('Không tải được lịch sử')}}openM(`<h3>Lịch sử thay đổi</h3><div class="log">${L.length?L.map(l=>`<div>${esc(l.m)}<small>${new Date(l.t).toLocaleString('vi-VN')}</small></div>`).join(''):'<div>Chưa có thay đổi nào.</div>'}</div><div class="acts"><button class="btn gray" onclick="adminM()">← Quay lại</button></div>`)}
+function shopM(){openM(`<h3>Thông tin liên hệ</h3><form onsubmit="saveShop(event)"><label>Số điện thoại / Zalo</label><input name="ph" value="${esc(S.shop.phone)}" inputmode="tel"><label>Địa chỉ cửa hàng</label><input name="ad" value="${esc(S.shop.address)}"><div class="acts"><button type="button" class="btn gray" onclick="adminM()">Hủy</button><button class="btn">Lưu</button></div></form>`)}
+function saveShop(e){e.preventDefault();S.shop={phone:e.target.ph.value.trim(),address:e.target.ad.value.trim()};closeM();save('Cập nhật thông tin liên hệ cửa hàng')}
+
+/* ---------- Thêm / sửa / xóa sản phẩm ---------- */
+function pform(id){
+  const p=id?S.products.find(x=>x.id===id):{};cur=[...(p.imgs||[])];
+  const cats=[...new Set(S.products.map(x=>x.cat).filter(Boolean))],whs=[...new Set([...WH,...S.products.map(x=>x.wheel).filter(Boolean)])];
+  openM(`<h3>${id?'Sửa':'Thêm'} sản phẩm</h3><form onsubmit="saveP(event,'${id||''}')">
+  <label>Tên sản phẩm *</label><input name="pn" required value="${esc(p.name)}">
+  <label>Danh mục (chọn hoặc gõ mới)</label><input name="pc" list="dc" placeholder="VD: Xe đạp địa hình (MTB)" value="${esc(p.cat)}"><datalist id="dc">${cats.map(c=>`<option value="${esc(c)}">`).join('')}</datalist>
+  <div class="row"><div><label>Giá bán (₫) *</label><input name="pp" type="number" min="0" step="1000" required value="${p.price==null?'':p.price}"></div><div><label>Số lượng trong kho *</label><input name="ps" type="number" min="0" required value="${p.stock==null?'':p.stock}"></div></div>
+  <div class="row"><div><label>Độ tuổi</label><select name="pa">${opts(AGES,p.age,'— Chưa chọn —')}</select></div><div><label>Bánh xe (inch)</label><input name="pw" list="dw" value="${esc(p.wheel)}"><datalist id="dw">${whs.map(c=>`<option value="${esc(c)}">`).join('')}</datalist></div></div>
+  <label>Chiều cao xe (cỡ khung)</label><select name="pf">${opts(FR,p.frame,'— Chưa chọn —')}</select>
+  <label>Mô tả sản phẩm</label><textarea name="pd" rows="5">${esc(p.desc)}</textarea>
+  <label>Hình ảnh (tối đa 6, ảnh đầu tiên là ảnh bìa)</label><input type="file" accept="image/*" multiple onchange="addImgs(this)"><div class="thumbs" id="thumbs"></div>
+  <div class="acts"><button type="button" class="btn gray" onclick="closeM()">Hủy</button><button class="btn">Lưu sản phẩm</button></div></form>`);
+  drawThumbs();
+}
+const rz=f=>new Promise(r=>{const i=new Image,u=URL.createObjectURL(f);i.onload=()=>{const k=Math.min(1,1000/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',.82))};i.onerror=()=>r(null);i.src=u});
+async function addImgs(inp){for(const f of inp.files){if(cur.length>=6){toast('Tối đa 6 ảnh');break}const d=await rz(f);if(d)cur.push(d)}inp.value='';drawThumbs()}
+function drawThumbs(){$('#thumbs').innerHTML=cur.map((s,i)=>`<div class="th"><img src="${s}" title="Bấm để đặt làm ảnh bìa" onclick="coverImg(${i})"><button type="button" onclick="rmImg(${i})">×</button>${i?'':'<em>Ảnh bìa</em>'}</div>`).join('')}
+function rmImg(i){cur.splice(i,1);drawThumbs()}
+function coverImg(i){cur.unshift(cur.splice(i,1)[0]);drawThumbs()}
+function saveP(e,id){
+  e.preventDefault();const f=e.target;
+  const o={name:f.pn.value.trim(),cat:f.pc.value.trim(),price:+f.pp.value||0,stock:Math.max(0,parseInt(f.ps.value)||0),age:f.pa.value,wheel:f.pw.value.trim(),frame:f.pf.value,desc:f.pd.value.trim(),imgs:[...cur]};
+  let msg;
+  if(id){const i=S.products.findIndex(x=>x.id===id),old=S.products[i],d=[];
+    if(old.price!==o.price)d.push(`giá ${vnd(old.price)} → ${vnd(o.price)}`);
+    if(old.stock!==o.stock)d.push(`kho ${old.stock} → ${o.stock}`);
+    S.products[i]={...old,...o};msg=`Sửa “${o.name}”`+(d.length?': '+d.join(', '):'');
+  }else{S.products.unshift({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),created:Date.now(),...o});msg=`Thêm sản phẩm “${o.name}” (giá ${vnd(o.price)}, kho ${o.stock})`}
+  closeM();save(msg);
+}
+function delP(id){const p=S.products.find(x=>x.id===id);if(!p||!confirm(`Xóa sản phẩm “${p.name}”?`))return;S.products=S.products.filter(x=>x.id!==id);if(location.hash.startsWith('#/p/'))location.hash='#/';save(`Xóa sản phẩm “${p.name}”`)}
+
+/* ---------- Khởi động ---------- */
+(async()=>{
+  let seed;try{seed=JSON.parse($('#seed').textContent)}catch(e){seed=S}
+  const db=await dbGet();
+  S=(db&&db.updated>=(seed.updated||0))?db:seed;
+  S.products=S.products||[];S.log=S.log||[];S.shop=S.shop||{phone:'',address:''};
+  S.products.forEach(p=>p.imgs=p.imgs||[]);
+  render();
+  if(API_URL){await pull();setInterval(()=>{if(!document.hidden)pull()},60000)}
+})();
+</script>
+</body>
+</html>
