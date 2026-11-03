@@ -77,12 +77,12 @@ footer{background:#0b1220;color:#94a3b8;padding:22px 0;text-align:center;font-si
 const $=(s,r=document)=>r.querySelector(s);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const AU={u:'Tienthao',h:'b0d965d2c8eeef89d9698f02a79dcf7cabe8d9221732057cfa5986d0bc225dc4'};
-const AGES=['Trẻ em (3–7 tuổi)','Thiếu niên (8–13 tuổi)','Người lớn (14 tuổi trở lên)'];
-const FR=['XS (người cao 1m40–1m55)','S (người cao 1m55–1m65)','M (người cao 1m65–1m75)','L (người cao 1m75–1m85)','XL (người cao trên 1m85)','Một cỡ'];
+const AGES=['Trẻ em (3–7 tuổi)','Thiếu niên (8–15 tuổi)','Người lớn (từ 16 tuổi trở lên)'];
+const FR=['XS (người cao dưới 1m55)','S (người cao 1m55–1m65)','M (người cao 1m65–1m75)','L (người cao 1m75–1m85)','XL (người cao trên 1m85)','Một cỡ'];
 const PR=[['Dưới 3 triệu',0,3e6],['3 – 6 triệu',3e6,6e6],['6 – 10 triệu',6e6,1e7],['10 – 20 triệu',1e7,2e7],['Trên 20 triệu',2e7,1e13]];
 const WH=['12','14','16','18','20','24','26','27.5','29','700c'];
 const NOIMG='<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="42" r="10"/><circle cx="50" cy="42" r="10"/><path d="M14 42l10-20h18l8 20M24 22l10 20 8-20M22 16h8M40 22l-2-6h6"/></svg>';
-const vnd=n=>(+n||0).toLocaleString('vi-VN')+' ₫';
+const vnd=n=>(+n||0).toLocaleString('en-US')+' VNĐ';
 let S={updated:0,products:[],log:[],shop:{phone:'',address:''}};
 let admin=sessionStorage.getItem('adm')==='1';
 let F={q:'',cat:'',age:'',price:'',wheel:'',frame:'',stock:false,sort:'new'};
@@ -209,13 +209,20 @@ function shopM(){openM(`<h3>Thông tin liên hệ</h3><form onsubmit="saveShop(e
 function saveShop(e){e.preventDefault();S.shop={phone:e.target.ph.value.trim(),address:e.target.ad.value.trim()};closeM();save('Cập nhật thông tin liên hệ cửa hàng')}
 
 /* ---------- Thêm / sửa / xóa sản phẩm ---------- */
+function fmtMoney(el){
+  const pos=el.selectionStart||0,before=el.value.slice(0,pos).replace(/\D/g,'').length;
+  const v=el.value.replace(/\D/g,'').replace(/^0+(?=\d)/,'');
+  el.value=v.replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  let n=0,i=0;for(;i<el.value.length&&n<before;i++)if(/\d/.test(el.value[i]))n++;
+  try{el.setSelectionRange(i,i)}catch(e){}
+}
 function pform(id){
   const p=id?S.products.find(x=>x.id===id):{};cur=[...(p.imgs||[])];
   const cats=[...new Set(S.products.map(x=>x.cat).filter(Boolean))],whs=[...new Set([...WH,...S.products.map(x=>x.wheel).filter(Boolean)])];
   openM(`<h3>${id?'Sửa':'Thêm'} sản phẩm</h3><form onsubmit="saveP(event,'${id||''}')">
   <label>Tên sản phẩm *</label><input name="pn" required value="${esc(p.name)}">
   <label>Danh mục (chọn hoặc gõ mới)</label><input name="pc" list="dc" placeholder="VD: Xe đạp địa hình (MTB)" value="${esc(p.cat)}"><datalist id="dc">${cats.map(c=>`<option value="${esc(c)}">`).join('')}</datalist>
-  <div class="row"><div><label>Giá bán (₫) *</label><input name="pp" type="number" min="0" step="1000" required value="${p.price==null?'':p.price}"></div><div><label>Số lượng trong kho *</label><input name="ps" type="number" min="0" required value="${p.stock==null?'':p.stock}"></div></div>
+  <div class="row"><div><label>Giá bán (VNĐ) *</label><input name="pp" type="text" inputmode="numeric" autocomplete="off" placeholder="VD: 5,500,000" required oninput="fmtMoney(this)" value="${p.price==null?'':String(p.price).replace(/\B(?=(\d{3})+(?!\d))/g,',')}"></div><div><label>Số lượng trong kho *</label><input name="ps" type="number" min="0" required value="${p.stock==null?'':p.stock}"></div></div>
   <div class="row"><div><label>Độ tuổi</label><select name="pa">${opts(AGES,p.age,'— Chưa chọn —')}</select></div><div><label>Bánh xe (inch)</label><input name="pw" list="dw" value="${esc(p.wheel)}"><datalist id="dw">${whs.map(c=>`<option value="${esc(c)}">`).join('')}</datalist></div></div>
   <label>Chiều cao xe (cỡ khung)</label><select name="pf">${opts(FR,p.frame,'— Chưa chọn —')}</select>
   <label>Mô tả sản phẩm</label><textarea name="pd" rows="5">${esc(p.desc)}</textarea>
@@ -223,14 +230,14 @@ function pform(id){
   <div class="acts"><button type="button" class="btn gray" onclick="closeM()">Hủy</button><button class="btn">Lưu sản phẩm</button></div></form>`);
   drawThumbs();
 }
-const rz=f=>new Promise(r=>{const i=new Image,u=URL.createObjectURL(f);i.onload=()=>{const k=Math.min(1,1000/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',.82))};i.onerror=()=>r(null);i.src=u});
+const rz=f=>new Promise(r=>{const i=new Image,u=URL.createObjectURL(f);i.onload=()=>{const k=Math.min(1,900/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',.75))};i.onerror=()=>r(null);i.src=u});
 async function addImgs(inp){for(const f of inp.files){if(cur.length>=6){toast('Tối đa 6 ảnh');break}const d=await rz(f);if(d)cur.push(d)}inp.value='';drawThumbs()}
 function drawThumbs(){$('#thumbs').innerHTML=cur.map((s,i)=>`<div class="th"><img src="${s}" title="Bấm để đặt làm ảnh bìa" onclick="coverImg(${i})"><button type="button" onclick="rmImg(${i})">×</button>${i?'':'<em>Ảnh bìa</em>'}</div>`).join('')}
 function rmImg(i){cur.splice(i,1);drawThumbs()}
 function coverImg(i){cur.unshift(cur.splice(i,1)[0]);drawThumbs()}
 function saveP(e,id){
   e.preventDefault();const f=e.target;
-  const o={name:f.pn.value.trim(),cat:f.pc.value.trim(),price:+f.pp.value||0,stock:Math.max(0,parseInt(f.ps.value)||0),age:f.pa.value,wheel:f.pw.value.trim(),frame:f.pf.value,desc:f.pd.value.trim(),imgs:[...cur]};
+  const o={name:f.pn.value.trim(),cat:f.pc.value.trim(),price:parseInt(String(f.pp.value).replace(/\D/g,''))||0,stock:Math.max(0,parseInt(f.ps.value)||0),age:f.pa.value,wheel:f.pw.value.trim(),frame:f.pf.value,desc:f.pd.value.trim(),imgs:[...cur]};
   let msg;
   if(id){const i=S.products.findIndex(x=>x.id===id),old=S.products[i],d=[];
     if(old.price!==o.price)d.push(`giá ${vnd(old.price)} → ${vnd(o.price)}`);
