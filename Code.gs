@@ -1,8 +1,8 @@
 /* ===== XE ĐẠP TƯỜNG HIỀN – MÁY CHỦ LƯU TRỮ TRÊN GOOGLE DRIVE (bản 2) =====
    Dán toàn bộ file này vào Google Apps Script (script.google.com).
    Tài khoản/mật khẩu bên dưới chỉ mình bạn nhìn thấy, khách không xem được. */
-const USER = 'Tienthao';
-const PASS = 'Thao02052002';
+const USER = '';
+const PASS = '';
 const FOLDER_ID = '1nrdQ5sL5FojUedsypbnFxsGN4bA44GKT'; // thư mục Drive của bạn
 
 const EMPTY = { updated: 0, products: [], shop: { phone: '', address: '' } };
